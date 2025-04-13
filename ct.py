@@ -41,25 +41,4 @@ async def predict_image(file: UploadFile = File(...)):
         return JSONResponse(content={"predicted_class": predicted_class_name})
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
-
-# Function to run the server
-async def run_server():
-    config = uvicorn.Config(app, host="0.0.0.0", port=8880)
-    server = uvicorn.Server(config)
-    await server.serve()
-
-# Check if running in an interactive environment
-def is_interactive():
-    import __main__ as main
-    return not hasattr(main, '__file__')
-
-# Run the server
-if __name__ == "__main__":
-    if is_interactive():
-        # For interactive environments (e.g., Jupyter Notebook)
-        loop = asyncio.get_event_loop()
-        loop.create_task(run_server())
-        print("Server is running on http://0.0.0.0:8880")
-    else:
-        # For standalone scripts
-        asyncio.run(run_server())
+ 
